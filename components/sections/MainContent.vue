@@ -63,7 +63,7 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-[1fr_110px] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
+      class="grid grid-cols-[auto_auto] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
     >
       <div class="justify-self-start">
         <div class="flex flex-col gap-y-1.5">
