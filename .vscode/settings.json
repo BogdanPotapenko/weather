@@ -1,0 +1,7 @@
+{
+    "google-translate.firstLanguage": "ru",
+    "google-translate.noticeOnlyError": true,
+    "google-translate.secondLanguage": "en",
+    "google-translate.maxSizeOfResult": 100,
+    "eslint.validate": []
+}
