@@ -15,6 +15,7 @@ export interface WeatherCurrent {
   wind_mph: number;
   uv: number;
   humidity: number;
+  pressure_mb: number;
   condition: WeatherCondition;
 }
 export interface WeatherCondition {

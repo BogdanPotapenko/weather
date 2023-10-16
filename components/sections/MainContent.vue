@@ -63,7 +63,7 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-[1fr_100px] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
+      class="grid grid-cols-[1fr_110px] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
     >
       <div class="justify-self-start">
         <div class="flex flex-col gap-y-1.5">
@@ -267,7 +267,7 @@
           <p
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
-            {{ data.value!.current.pressure }} mb
+            {{ data.value!.current.pressure_mb }} mb
           </p>
         </div>
         <div
