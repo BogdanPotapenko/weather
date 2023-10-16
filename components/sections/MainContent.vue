@@ -98,7 +98,7 @@
       </div>
       <div class="justify-self-end flex items-center lg:pr-7 h-full">
         <img
-          class="max-sm:max-h-[100px] h-full"
+          class="max-sm:max-h-[100px] max-sm:max-w-[100px] w-full h-full"
           :src="data.value!.current.condition.icon"
           alt=""
         />
