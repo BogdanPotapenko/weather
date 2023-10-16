@@ -63,7 +63,7 @@
       </div>
     </div>
     <div
-      class="grid grid-cols-[auto_auto] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
+      class="grid grid-cols-[1fr_100px] sm:grid-cols-2 p-4 lg:px-10 lg:pt-4 lg:pb-7"
     >
       <div class="justify-self-start">
         <div class="flex flex-col gap-y-1.5">
@@ -98,7 +98,7 @@
       </div>
       <div class="justify-self-end flex items-center lg:pr-7 h-full">
         <img
-          class="max-sm:max-h-[100px] max-sm:max-w-[100px] w-full h-full"
+          class="max-sm:max-h-[100px] max-sm:max-w-[100px] max-sm:min-h-[100px] max-sm:min-w-[100px] w-full h-full"
           :src="data.value!.current.condition.icon"
           alt=""
         />
