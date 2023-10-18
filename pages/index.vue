@@ -15,7 +15,9 @@
           <navigation
             :cities="cities"
             v-model:degree="degree"
-            v-model:measure="measure"
+            v-model:speed="speed"
+            v-model:precip="precip"
+            v-model:pressure="pressure"
             v-model:location="location"
           />
 
@@ -23,7 +25,9 @@
             :data="data"
             :hours="hours"
             :degree="degree"
-            :measure="measure"
+            :speed="speed"
+            :precip="precip"
+            :pressure="pressure"
             v-model:location="location"
           />
           <week-forecast
@@ -40,7 +44,9 @@ const { isLoading, data, location, date, hours, lang } = useWeather();
 
 const cities: any = ref(["Kyiv"]);
 const degree = ref("c");
-const measure = ref("km/h");
+const speed = ref("km/h");
+const precip = ref("mm");
+const pressure = ref("mbar");
 
 watch(location, () => {
   setTimeout(() => {

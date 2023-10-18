@@ -150,12 +150,10 @@
       :class="seeMore ? 'h-full' : 'h-[210px] sm:h-[220px] '"
     >
       <titles title="air conditions" class="self-center" />
-      <button
+      <my-button
         @click="seeMore = !seeMore"
-        class="justify-self-end px-3 py-1.5 rounded-2xl bg-[#123963] text-[12px]/[12px] font-bold"
-      >
-        {{ seeMore ? "See less" : "See more" }}
-      </button>
+        :value="seeMore ? 'See less' : 'See more'"
+      />
       <div
         class="grid grid-cols-2 grid-rows-[auto_1fr] col-span-2 gap-y-5 gap-x-5 sm:gap-x-10"
       >
@@ -195,11 +193,11 @@
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
             {{
-              measure === "km/h"
+              speed === "km/h"
                 ? data.value!.current.wind_kph
                 : data.value!.current.wind_mph
             }}
-            {{ measure }}
+            {{ speed }}
           </p>
         </div>
         <div
@@ -249,8 +247,12 @@
           <p
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
-            {{ data.value!.forecast.forecastday[0].day.totalprecip_mm }}
-            mm
+            {{
+              precip === "mm"
+                ? data.value!.current.precip_mm
+                : data.value!.current.precip_in
+            }}
+            {{ precip }}
           </p>
         </div>
         <div
@@ -267,7 +269,12 @@
           <p
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
-            {{ data.value!.current.pressure_mb }} mb
+            {{
+              pressure === "mbar"
+                ? data.value!.current.pressure_mb
+                : data.value!.current.pressure_in
+            }}
+            {{ pressure }}
           </p>
         </div>
         <div
@@ -284,7 +291,12 @@
           <p
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
-            {{ data.value!.current.vis_km }} km/h
+            {{
+              speed === "km/h"
+                ? data.value!.current.vis_km
+                : data.value!.current.vis_miles
+            }}
+            {{ speed }}
           </p>
         </div>
         <div
@@ -301,7 +313,7 @@
           <p
             class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
           >
-            {{ data.value!.current.humidity }}
+            {{ data.value!.current.humidity }}%
           </p>
         </div>
         <div
@@ -352,7 +364,9 @@ defineProps<{
   data: any;
   hours: any;
   degree: string;
-  measure: string;
+  speed: string;
+  precip: string;
+  pressure: string;
 }>();
 
 const { data: search, q } = useSearch();

@@ -14,8 +14,13 @@ export interface WeatherCurrent {
   wind_kph: number;
   wind_mph: number;
   uv: number;
+  vis_km: number;
+  vis_miles: number;
   humidity: number;
   pressure_mb: number;
+  pressure_in: number;
+  precip_mm: number;
+  precip_in: number;
   condition: WeatherCondition;
 }
 export interface WeatherCondition {
@@ -37,7 +42,6 @@ export interface Day {
   mintemp_f: number;
   daily_chance_of_rain: number;
   daily_chance_of_snow: number;
-  totalprecip_mm: number;
   condition: ForecastDayCondition;
 }
 export interface Astro {

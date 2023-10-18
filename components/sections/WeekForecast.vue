@@ -6,7 +6,7 @@
     <div class="flex flex-col h-full">
       <div
         v-for="day in week"
-        class="grid grid-cols-[50px_auto_1fr_65px] grow gap-x-1 items-center first:border-0 border-t border-gray/50"
+        class="grid grid-cols-[25%_auto_1fr_25%] grow gap-x-1 items-center first:border-0 border-t border-gray/50"
       >
         <p class="text-gray text-[14px]/[14px] font-bold">
           {{
@@ -29,12 +29,12 @@
           class="justify-self-end text-[14px]/[14px] whitespace-nowrap font-bold ml-2"
         >
           {{
-            Math.floor(degree === "c" ? day.day.mintemp_c : day.day.mintemp_f)
+            Math.floor(degree === "c" ? day.day.maxtemp_c : day.day.maxtemp_f)
           }}
           <span class="text-gray">
             {{
               "/" +
-              Math.floor(degree === "c" ? day.day.maxtemp_c : day.day.maxtemp_f)
+              Math.floor(degree === "c" ? day.day.mintemp_c : day.day.maxtemp_f)
             }}</span
           >
         </div>

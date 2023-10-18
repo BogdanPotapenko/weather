@@ -34,17 +34,18 @@
       <modal @close="isModal.cities = false" :is-modal="isModal.cities">
         <div class="h-full">
           <div class="border-b border-gray/50 p-6.5">
-            <h3 class="text-gray text-[30px]/[30px] font-extrabold uppercase">
+            <h3
+              class="text-gray text-[25px]/[25px] md:text-[30px]/[30px] font-extrabold uppercase"
+            >
               cities
             </h3>
           </div>
           <div v-if="cities.length === 0" class="flex justify-center">
-            <button
+            <my-button
+              class="text-[20px]/[20px] m-5"
               @click="selectCity()"
-              class="text-[25px]/[25px] font-extrabold p-6.5"
-            >
-              Select a city
-            </button>
+              value="Select a city"
+            />
           </div>
           <div class="h-[calc(100%_-_80px)] px-10 pb-3">
             <div class="h-full flex flex-col overflow-auto">
@@ -58,13 +59,10 @@
                 >
                   {{ city }}
                 </button>
-
-                <button
+                <my-button
                   @click="cities.splice(cities.indexOf(city), 1)"
-                  class="px-3 py-1.5 rounded-2xl bg-[#123963] text-[12px]/[12px] font-bold"
-                >
-                  del
-                </button>
+                  value="delete"
+                />
               </div>
             </div>
           </div>
@@ -80,38 +78,38 @@
       <modal @close="isModal.settings = false" :is-modal="isModal.settings">
         <div class="h-full">
           <div class="border-b border-gray/50 p-6.5">
-            <h3 class="text-gray text-[30px]/[30px] font-extrabold uppercase">
+            <h3
+              class="text-gray text-[25px]/[25px] md:text-[30px]/[30px] font-extrabold uppercase"
+            >
               settings
             </h3>
           </div>
           <div class="h-[calc(100%_-_80px)] px-10 pb-3">
             <div class="h-full flex flex-col gap-5 pt-5">
-              <div>
-                <select
-                  id="degree"
-                  :value="degree"
-                  @input="updateDegree"
-                  name="select"
-                  class="border border-gray text-black text-lg rounded-lg block w-full p-2.5"
-                >
-                  <option for="degree" value="c" selected>degree: c</option>
-                  <option for="degree" value="f">degree: f</option>
-                </select>
-              </div>
-              <div>
-                <select
-                  id="speed"
-                  :value="measure"
-                  @input="updateMeasure"
-                  name="select"
-                  class="border border-gray text-black text-lg rounded-lg block w-full p-2.5"
-                >
-                  <option class="p-2.5" for="speed" value="km/h" selected>
-                    speed: km/h
-                  </option>
-                  <option for="speed" value="m/h">speed: m/h</option>
-                </select>
-              </div>
+              <my-select
+                label="degree"
+                :model-value="degree"
+                :options="['c', 'f']"
+                @input="updateDegree"
+              />
+              <my-select
+                label="speed"
+                :model-value="speed"
+                :options="['km/h', 'm/h']"
+                @input="updateSpeed"
+              />
+              <my-select
+                label="precip"
+                :model-value="precip"
+                :options="['mm', 'in']"
+                @input="updatePrecip"
+              />
+              <my-select
+                label="pressure"
+                :model-value="pressure"
+                :options="['mbar', 'inHg']"
+                @input="updatePressure"
+              />
             </div>
           </div>
         </div>
@@ -122,14 +120,18 @@
 <script setup lang="ts">
 const emit = defineEmits<{
   (e: "update:degree", value?: string): void;
-  (e: "update:measure", value?: string): void;
+  (e: "update:speed", value?: string): void;
+  (e: "update:precip", value?: string): void;
+  (e: "update:pressure", value?: string): void;
   (e: "update:location", value?: string): void;
 }>();
 
 defineProps<{
   cities: [];
   degree: string;
-  measure: string;
+  speed: string;
+  precip: string;
+  pressure: string;
   location: string;
 }>();
 
@@ -140,8 +142,14 @@ const isModal: any = ref({});
 const updateDegree = (e: Event) => {
   emit("update:degree", (e.target as HTMLInputElement).value);
 };
-const updateMeasure = (e: Event) => {
-  emit("update:measure", (e.target as HTMLInputElement).value);
+const updateSpeed = (e: Event) => {
+  emit("update:speed", (e.target as HTMLInputElement).value);
+};
+const updatePrecip = (e: Event) => {
+  emit("update:precip", (e.target as HTMLInputElement).value);
+};
+const updatePressure = (e: Event) => {
+  emit("update:pressure", (e.target as HTMLInputElement).value);
 };
 const updateLocation = (newLocation: string) => {
   emit("update:location", newLocation);

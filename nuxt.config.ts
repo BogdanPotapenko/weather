@@ -4,10 +4,6 @@ export default defineNuxtConfig({
   app: {
     baseURL: "/weather/",
   },
-  mapbox: {
-    accessToken:
-      "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g",
-  },
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -17,7 +13,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_URL,
+      weatherKey: process.env.WEATHER_KEY,
     },
+  },
+  mapbox: {
+    accessToken: process.env.MAP_KEY,
   },
   components: [
     "~/components",
