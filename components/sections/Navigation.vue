@@ -11,17 +11,17 @@
       <nav-button
         @click="if (!isModal.cities) isModal.cities = true;"
         value="cities"
-        icon="/cities.svg"
+        icon="/weather/cities.svg"
       />
       <nav-button
         @click="if (!isModal.map) isModal.map = true;"
         value="map"
-        icon="/map.svg"
+        icon="/weather/map.svg"
       />
       <nav-button
         @click="if (!isModal.settings) isModal.settings = true;"
         value="settings"
-        icon="/settings.svg"
+        icon="/weather/settings.svg"
       />
       <modal @close="isModal.cities = false" :is-modal="isModal.cities">
         <div class="h-full">

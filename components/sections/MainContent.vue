@@ -135,14 +135,14 @@
         <weather-card
           :class="seeMore ? 'p-5' : 'p-0'"
           title="Real feel"
-          icon="/temperature.svg"
+          icon="/weather/temperature.svg"
           unit="&#176;"
           :value="Math.floor(degree === 'c' ? data.value!.current.feelslike_c : data.value!.current.feelslike_f)"
         />
         <weather-card
           :class="seeMore ? 'p-5' : 'p-0'"
           title="Wind"
-          icon="/wind.svg"
+          icon="/weather/wind.svg"
           :unit="' ' + speed"
           :value="speed === 'km/h'? data.value!.current.wind_kph: data.value!.current.wind_mph"
         />
@@ -150,7 +150,7 @@
           v-if="data.value!.forecast.forecastday[0].day.daily_chance_of_rain >= data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
           :class="seeMore ? 'p-5' : 'p-0'"
           title="Chance of rain"
-          icon="/rain.svg"
+          icon="/weather/rain.svg"
           unit="%"
           :value="data.value!.forecast.forecastday[0].day.daily_chance_of_rain"
         />
@@ -158,14 +158,14 @@
           v-else
           :class="seeMore ? 'p-5' : 'p-0'"
           title="Chance of snow"
-          icon="/snow.svg"
+          icon="/weather/snow.svg"
           unit="%"
           :value="data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
         />
         <weather-card
           :class="seeMore ? 'p-5' : 'p-0'"
           title="UV Index"
-          icon="/uv.svg"
+          icon="/weather/uv.svg"
           :value="data.value!.current.uv"
         />
         <weather-card
@@ -173,7 +173,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title="Precip"
-          icon="/precip.svg"
+          icon="/weather/precip.svg"
           :unit="' ' + precip"
           :value="precip === 'mm' ? data.value!.current.precip_mm : data.value!.current.precip_in"
         />
@@ -183,7 +183,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title="Pressure"
-          icon="/pressure.svg"
+          icon="/weather/pressure.svg"
           :unit="' ' + pressure"
           :value="pressure === 'mbar' ? data.value!.current.pressure_mb : data.value!.current.pressure_in"
         />
@@ -193,7 +193,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title="Visibility"
-          icon="/visibility.svg"
+          icon="/weather/visibility.svg"
           :unit="' ' + speed"
           :value="speed === 'km/h' ? data.value!.current.vis_km : data.value!.current.vis_miles"
         />
@@ -202,7 +202,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title="Humidity"
-          icon="/humidity.svg"
+          icon="/weather/humidity.svg"
           unit="%"
           :value="data.value!.current.humidity"
         />
@@ -211,7 +211,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title=" Sunrise"
-          icon="/sunrise.svg"
+          icon="/weather/sunrise.svg"
           :value="data.value!.forecast.forecastday[0].astro.sunrise"
         />
         <weather-card
@@ -219,7 +219,7 @@
             seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
           "
           title="Sunset"
-          icon="/sunset.svg"
+          icon="/weather/sunset.svg"
           :value="data.value!.forecast.forecastday[0].astro.sunset"
         />
       </div>
