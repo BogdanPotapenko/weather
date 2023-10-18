@@ -8,29 +8,21 @@
       <img class="" src="/weather.svg" alt="" />
     </div>
     <div class="flex lg:flex-col items-center gap-2 overflow-hidden">
-      <button
-        class="h-[40px] lg:w-[55px] lg:h-[55px] flex flex-col justify-center items-center p-1 rounded-xl hover:bg-[#123963]"
+      <nav-button
         @click="if (!isModal.cities) isModal.cities = true;"
-      >
-        <img class="w-[25px] h-[25px]" src="/cities.svg" alt="" />
-        <p class="text-gray text-[13px]/[13px] font-semibold">cities</p>
-      </button>
-
-      <button
+        value="cities"
+        icon="/cities.svg"
+      />
+      <nav-button
         @click="if (!isModal.map) isModal.map = true;"
-        class="h-[40px] lg:w-[55px] lg:h-[55px] flex flex-col justify-center items-center p-1 rounded-xl hover:bg-[#123963]"
-      >
-        <img class="w-[25px] h-[25px]" src="/map.svg" alt="" />
-        <p class="text-gray text-[13px]/[13px] font-semibold">map</p>
-      </button>
-
-      <button
+        value="map"
+        icon="/map.svg"
+      />
+      <nav-button
         @click="if (!isModal.settings) isModal.settings = true;"
-        class="h-[40px] lg:w-[55px] lg:h-[55px] flex flex-col justify-center items-center rounded-xl hover:bg-[#123963]"
-      >
-        <img class="w-[25px] h-[25px]" src="/settings.svg" alt="" />
-        <p class="text-gray text-[13px]/[13px] font-semibold">settings</p>
-      </button>
+        value="settings"
+        icon="/settings.svg"
+      />
       <modal @close="isModal.cities = false" :is-modal="isModal.cities">
         <div class="h-full">
           <div class="border-b border-gray/50 p-6.5">
@@ -41,7 +33,7 @@
             </h3>
           </div>
           <div v-if="cities.length === 0" class="flex justify-center">
-            <my-button
+            <main-button
               class="text-[20px]/[20px] m-5"
               @click="selectCity()"
               value="Select a city"
@@ -59,7 +51,7 @@
                 >
                   {{ city }}
                 </button>
-                <my-button
+                <main-button
                   @click="cities.splice(cities.indexOf(city), 1)"
                   value="delete"
                 />

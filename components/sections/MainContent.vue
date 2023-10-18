@@ -12,20 +12,7 @@
           search?.value?.length > 0 && q ? 'border-b border-gray/50 ' : ''
         "
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="w-6 h-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+        <img class="w-6 h-6" src="/search.svg" alt="" />
         <input
           v-model="q"
           class="w-full bg-primary text-gray outline-none"
@@ -42,20 +29,7 @@
           @click="updateLocation(locality.name)"
           class="flex gap-x-2 p-2 text-gray cursor-pointer hover:bg-[#123963] last:rounded-b-xl"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
+          <img class="w-6 h-6" src="/search.svg" alt="" />
           <p>
             {{ locality.name }}
           </p>
@@ -150,206 +124,104 @@
       :class="seeMore ? 'h-full' : 'h-[210px] sm:h-[220px] '"
     >
       <titles title="air conditions" class="self-center" />
-      <my-button
+      <main-button
+        class="justify-self-end"
         @click="seeMore = !seeMore"
         :value="seeMore ? 'See less' : 'See more'"
       />
       <div
         class="grid grid-cols-2 grid-rows-[auto_1fr] col-span-2 gap-y-5 gap-x-5 sm:gap-x-10"
       >
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center"
+        <weather-card
           :class="seeMore ? 'p-5' : 'p-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/temperature.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Real Feel
-          </p>
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{
-              Math.floor(
-                degree === "c"
-                  ? data.value!.current.feelslike_c
-                  : data.value!.current.feelslike_f
-              )
-            }}&#176;
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center"
+          title="Real feel"
+          icon="/temperature.svg"
+          unit="&#176;"
+          :value="Math.floor(degree === 'c' ? data.value!.current.feelslike_c : data.value!.current.feelslike_f)"
+        />
+        <weather-card
           :class="seeMore ? 'p-5' : 'p-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/wind.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Wind
-          </p>
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{
-              speed === "km/h"
-                ? data.value!.current.wind_kph
-                : data.value!.current.wind_mph
-            }}
-            {{ speed }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center"
+          title="Wind"
+          icon="/wind.svg"
+          :unit="' ' + speed"
+          :value="speed === 'km/h'? data.value!.current.wind_kph: data.value!.current.wind_mph"
+        />
+        <weather-card
+          v-if="data.value!.forecast.forecastday[0].day.daily_chance_of_rain >= data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
           :class="seeMore ? 'p-5' : 'p-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/rain.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Chance of rain
-          </p>
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{ data.value!.forecast.forecastday[0].day.daily_chance_of_rain }}%
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center"
+          title="Chance of rain"
+          icon="/rain.svg"
+          unit="%"
+          :value="data.value!.forecast.forecastday[0].day.daily_chance_of_rain"
+        />
+        <weather-card
+          v-else
           :class="seeMore ? 'p-5' : 'p-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/uv.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            UV Index
-          </p>
+          title="Chance of snow"
+          icon="/snow.svg"
+          unit="%"
+          :value="data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
+        />
+        <weather-card
+          :class="seeMore ? 'p-5' : 'p-0'"
+          title="UV Index"
+          icon="/uv.svg"
+          :value="data.value!.current.uv"
+        />
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title="Precip"
+          icon="/precip.svg"
+          :unit="' ' + precip"
+          :value="precip === 'mm' ? data.value!.current.precip_mm : data.value!.current.precip_in"
+        />
 
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{ data.value!.current.uv }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/precip.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Precip
-          </p>
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title="Pressure"
+          icon="/pressure.svg"
+          :unit="' ' + pressure"
+          :value="pressure === 'mbar' ? data.value!.current.pressure_mb : data.value!.current.pressure_in"
+        />
 
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{
-              precip === "mm"
-                ? data.value!.current.precip_mm
-                : data.value!.current.precip_in
-            }}
-            {{ precip }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/pressure.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Pressure
-          </p>
-
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{
-              pressure === "mbar"
-                ? data.value!.current.pressure_mb
-                : data.value!.current.pressure_in
-            }}
-            {{ pressure }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/visibility.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Visibility
-          </p>
-
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{
-              speed === "km/h"
-                ? data.value!.current.vis_km
-                : data.value!.current.vis_miles
-            }}
-            {{ speed }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/humidity.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Humidity
-          </p>
-
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{ data.value!.current.humidity }}%
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/sunrise.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Sunrise
-          </p>
-
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{ data.value!.forecast.forecastday[0].astro.sunrise }}
-          </p>
-        </div>
-        <div
-          class="grid grid-cols-[auto_1fr] gap-y-1.5 gap-x-2 items-center p-5 transition-all duration-700"
-          :class="seeMore ? 'visible opacity-100' : 'invisible opacity-0'"
-        >
-          <img class="w-[25px] h-[25px]" src="/sunset.svg" alt="" />
-          <p
-            class="text-[18px]/[18px] sm:text-[20px]/[20px] text-gray font-semibold"
-          >
-            Sunset
-          </p>
-
-          <p
-            class="col-start-2 text-[17px]/[17px] sm:text-[30px]/[30px] font-bold"
-          >
-            {{ data.value!.forecast.forecastday[0].astro.sunset }}
-          </p>
-        </div>
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title="Visibility"
+          icon="/visibility.svg"
+          :unit="' ' + speed"
+          :value="speed === 'km/h' ? data.value!.current.vis_km : data.value!.current.vis_miles"
+        />
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title="Humidity"
+          icon="/humidity.svg"
+          unit="%"
+          :value="data.value!.current.humidity"
+        />
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title=" Sunrise"
+          icon="/sunrise.svg"
+          :value="data.value!.forecast.forecastday[0].astro.sunrise"
+        />
+        <weather-card
+          :class="
+            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+          "
+          title="Sunset"
+          icon="/sunset.svg"
+          :value="data.value!.forecast.forecastday[0].astro.sunset"
+        />
       </div>
     </div>
   </section>
