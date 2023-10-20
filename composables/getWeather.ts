@@ -1,6 +1,6 @@
 import { Weather } from "~/types/types";
 
-export const getWeather = (params: any, key: any) => {
+export const getWeather = (params: object, key: string) => {
   const runtimeConfig = useRuntimeConfig();
   const result = useAsyncData(key, () =>
     $fetch<Weather>("/forecast.json", {

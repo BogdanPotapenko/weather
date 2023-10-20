@@ -7,6 +7,7 @@ export interface Location {
   name: string;
 }
 export interface WeatherCurrent {
+  last_updated: string;
   temp_c: number;
   temp_f: number;
   feelslike_c: number;
@@ -53,6 +54,16 @@ export interface ForecastDayCondition {
   icon: string;
 }
 export interface ForecastHuor {
+  time: string;
+  condition: HourCondition;
   temp_c: number;
   temp_f: number;
+}
+export interface HourCondition {
+  icon: string;
+}
+
+export interface Search {
+  id: number;
+  name: string;
 }

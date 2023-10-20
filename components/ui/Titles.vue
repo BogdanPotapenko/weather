@@ -1,5 +1,5 @@
 <template>
-  <h4 class="text-gray text-[12px]/[12px] font-extrabold uppercase">
+  <h4 class="text-gray text-xs font-extrabold uppercase">
     {{ title }}
   </h4>
 </template>

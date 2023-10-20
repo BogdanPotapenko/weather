@@ -3,7 +3,7 @@
     class="lg:col-span-1 flex lg:flex-col items-center max-lg:justify-between gap-y-10 p-2 lg:py-4 lg:px-2 rounded-2xl bg-primary"
   >
     <div
-      class="w-[40px] h-[40px] lg:w-[55px] lg:h-[55px] bg-[#123963] flex justify-center p-2 rounded-xl"
+      class="w-10 h-10 lg:w-14 lg:h-14 bg-hover flex justify-center p-2 rounded-xl"
     >
       <img class="" src="/weather.svg" alt="" />
     </div>
@@ -26,15 +26,13 @@
       <modal @close="isModal.cities = false" :is-modal="isModal.cities">
         <div class="h-full">
           <div class="border-b border-gray/50 p-6.5">
-            <h3
-              class="text-gray text-[25px]/[25px] md:text-[30px]/[30px] font-extrabold uppercase"
-            >
+            <h3 class="text-gray text-2xl md:text-3xl font-extrabold uppercase">
               cities
             </h3>
           </div>
           <div v-if="cities.length === 0" class="flex justify-center">
             <main-button
-              class="text-[20px]/[20px] m-5"
+              class="text-xl m-5"
               @click="selectCity()"
               value="Select a city"
             />
@@ -46,7 +44,7 @@
                 class="flex justify-between py-5 border-b border-gray/50"
               >
                 <button
-                  class="text-[25px]/[25px] font-extrabold capitalize"
+                  class="text-2xl font-extrabold capitalize"
                   @click="updateLocation(city)"
                 >
                   {{ city }}
@@ -70,9 +68,7 @@
       <modal @close="isModal.settings = false" :is-modal="isModal.settings">
         <div class="h-full">
           <div class="border-b border-gray/50 p-6.5">
-            <h3
-              class="text-gray text-[25px]/[25px] md:text-[30px]/[30px] font-extrabold uppercase"
-            >
+            <h3 class="text-gray text-2xl md:text-3xl font-extrabold uppercase">
               settings
             </h3>
           </div>
@@ -129,7 +125,13 @@ defineProps<{
 
 const markerRef = useMapboxMarkerRef("marker1");
 
-const isModal: any = ref({});
+interface Modal {
+  cities?: boolean;
+  map?: boolean;
+  settings?: boolean;
+}
+
+const isModal = ref<Modal>({});
 
 const updateDegree = (e: Event) => {
   emit("update:degree", (e.target as HTMLInputElement).value);
@@ -155,8 +157,8 @@ const selectCity = () => {
 };
 
 watch(isModal.value, () => {
-  Object.values(isModal.value).every((el: any) => {
-    if (el) {
+  Object.values(isModal.value).every((e: boolean) => {
+    if (e) {
       document.body.style.overflow = "hidden";
       return false;
     } else {

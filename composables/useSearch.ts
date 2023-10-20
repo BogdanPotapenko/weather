@@ -1,11 +1,13 @@
+import { Search } from "~/types/types";
+
 export function useSearch() {
   const runtimeConfig = useRuntimeConfig();
   const q = ref("");
 
   const result = useQuery(() => {
-    const res = useAsyncData<any>("search", async () =>
+    const res = useAsyncData("search", async () =>
       q.value
-        ? $fetch("/search.json", {
+        ? $fetch<Search[]>("/search.json", {
             method: "GET",
             baseURL: runtimeConfig.public.apiBase,
             params: { q: q.value },

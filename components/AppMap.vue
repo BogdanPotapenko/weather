@@ -9,7 +9,7 @@
     }"
   >
     <MapboxDefaultMarker
-      v-if="coordinates.length === 2"
+      v-if="coordinates"
       marker-id="marker1"
       :options="{}"
       :lnglat="coordinates"
@@ -18,15 +18,16 @@
   </MapboxMap>
 </template>
 <script setup lang="ts">
-const coordinates: any = ref([]);
+import { LngLatLike } from "mapbox-gl";
+
+const coordinates = ref<LngLatLike>();
 
 useMapbox("map1", (map) => {
   map.on("click", (e) => {
-    if (coordinates.value.length !== 2) {
-      coordinates.value.push(e.lngLat.lng);
-      coordinates.value.push(e.lngLat.lat);
+    if (!coordinates.value) {
+      coordinates.value = [e.lngLat.lng, e.lngLat.lat];
     } else {
-      coordinates.value = [];
+      coordinates.value = undefined;
     }
   });
 });

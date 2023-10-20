@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-3 py-1.5 rounded-2xl bg-[#173351] hover:bg-[#123963] text-[12px]/[12px] font-bold"
+    class="px-3 py-1.5 rounded-2xl bg-button hover:bg-hover text-xs font-bold"
   >
     {{ value }}
   </button>

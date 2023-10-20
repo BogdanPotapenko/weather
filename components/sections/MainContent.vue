@@ -1,15 +1,21 @@
 <template>
   <section
-    class="relative h-[636px] sm:h-[726px] lg:h-[735px] flex flex-col lg:col-span-7 gap-y-4 transition-all duration-700"
+    class="relative h-[650px] sm:h-[730px] lg:h-[736px] flex flex-col lg:col-span-7 gap-y-4 transition-all duration-700"
   >
     <div
       class="relative bg-primary text-gray"
-      :class="search?.value?.length > 0 && q ? 'rounded-t-xl ' : 'rounded-xl'"
+      :class="
+        search?.value && search.value.length > 0 && q
+          ? 'rounded-t-xl '
+          : 'rounded-xl'
+      "
     >
       <div
         class="flex gap-x-2 mx-2 py-2 text-gray"
         :class="
-          search?.value?.length > 0 && q ? 'border-b border-gray/50 ' : ''
+          search?.value && search.value.length > 0 && q
+            ? 'border-b border-gray/50 '
+            : ''
         "
       >
         <img class="w-6 h-6" src="/search.svg" alt="" />
@@ -26,8 +32,9 @@
       >
         <div
           v-for="locality in search.value"
+          :key="locality.id"
           @click="updateLocation(locality.name)"
-          class="flex gap-x-2 p-2 text-gray cursor-pointer hover:bg-[#123963] last:rounded-b-xl"
+          class="flex gap-x-2 p-2 text-gray cursor-pointer hover:bg-hover last:rounded-b-xl"
         >
           <img class="w-6 h-6" src="/search.svg" alt="" />
           <p>
@@ -41,47 +48,44 @@
     >
       <div class="justify-self-start">
         <div class="flex flex-col gap-y-1.5">
-          <h3 class="text-[30px]/[30px] sm:text-[40px]/[40px] font-semibold">
-            {{ data.value?.location.name }}
+          <h3 class="text-3xl sm:text-4xl font-semibold">
+            {{ data.location.name }}
           </h3>
           <p
             v-if="
-                      data.value!.forecast.forecastday[0].day
-                        .daily_chance_of_rain >=
-                      data.value!.forecast.forecastday[0].day
-                        .daily_chance_of_snow
-                    "
+              data.forecast.forecastday[0].day.daily_chance_of_rain >=
+              data.forecast.forecastday[0].day.daily_chance_of_snow
+            "
+            class="whitespace-nowrap"
           >
             Chance of rain
-            {{ data.value!.forecast.forecastday[0].day.daily_chance_of_rain }}%
+            {{ data.forecast.forecastday[0].day.daily_chance_of_rain }}%
           </p>
-          <p v-else>
+          <p v-else class="whitespace-nowrap">
             Chance of snow
-            {{ data.value!.forecast.forecastday[0].day.daily_chance_of_snow }}%
+            {{ data.forecast.forecastday[0].day.daily_chance_of_snow }}%
           </p>
         </div>
-        <h2 class="pt-12 text-[35px]/[35px] sm:text-[55px]/[55px] font-bold">
+        <h2 class="pt-12 text-4xl sm:text-5xl font-bold">
           {{
             Math.floor(
-              degree === "c"
-                ? data.value!.current.temp_c
-                : data.value!.current.temp_f
+              degree === "c" ? data.current.temp_c : data.current.temp_f
             )
           }}&#176;
         </h2>
       </div>
       <div class="justify-self-end flex items-center lg:pr-7 h-full">
         <img
-          class="max-sm:max-h-[100px] max-sm:max-w-[100px] max-sm:min-h-[100px] max-sm:min-w-[100px] w-full h-full"
-          :src="data.value!.current.condition.icon"
+          class="max-sm:max-h-25 max-sm:max-w-25 max-sm:min-h-25 max-sm:min-w-25 w-full h-full"
+          :src="data.current.condition.icon"
           alt=""
         />
       </div>
     </div>
     <div
-      class="flex flex-col gap-y-5 sm:gap-y-6 px-3 py-5 sm:py-7 lg:px-[20px] lg:py-[25px] bg-primary rounded-3xl"
+      class="flex flex-col gap-y-5 sm:gap-y-6 px-3 py-5 sm:py-7 lg:px-5 lg:py-6 bg-primary rounded-3xl"
     >
-      <titles class="ml-[8px]" title="today's forecast" />
+      <titles class="ml-2" title="today's forecast" />
       <div
         ref="scroller"
         class="flex flex-row flex-nowrap overflow-x-scroll overflow-y-hidden"
@@ -92,135 +96,157 @@
           class="min-w-[calc(100%_/_5_+_1px)] sm:min-w-[calc(100%_/_6_+_1px)] flex flex-col items-center first:border-0 border-l border-gray/50"
         >
           <p
-            v-if="index === 0"
-            class="text-gray text-[10px]/[10px] sm:text-[15px]/[20px] font-bold uppercase"
-          >
-            NOW
-          </p>
-          <p
-            v-else
-            class="text-gray text-[10px]/[10px] sm:text-[15px]/[20px] font-bold uppercase whitespace-nowrap"
+            class="text-gray text-[10px]/[10px] sm:text-base font-bold uppercase whitespace-nowrap"
           >
             {{
-              new Date(hour.time)
-                .toLocaleTimeString("en-US")
-                .match(/[\d]+:\d{2}|[AP]M+/g)
-                ?.join(" ")
+              index === 0
+                ? "NOW"
+                : new Date(hour.time)
+                    .toLocaleTimeString("en-US")
+                    .match(/[\d]+:\d{2}|[AP]M+/g)
+                    ?.join(" ")
             }}
           </p>
-          <img
-            class="w-[50px] sm:w-[75px] p-1"
-            :src="hour.condition.icon"
-            alt=""
-          />
-          <p class="text-[18px] sm:text-[22px]/[22px] font-bold uppercase">
+          <img class="w-12 sm:w-[75px] p-1" :src="hour.condition.icon" alt="" />
+          <p class="text-lg sm:text-[22px]/[22px] font-bold uppercase">
             {{ Math.floor(degree === "c" ? hour?.temp_c : hour?.temp_f) }}&#176;
           </p>
         </div>
       </div>
     </div>
     <div
-      class="absolute w-full bottom-0 grid grid-cols-2 grid-rows-[auto_auto_1fr] gap-y-4 p-5 lg:px-[27px] bg-primary rounded-2xl overflow-hidden transition-all duration-700"
-      :class="seeMore ? 'h-full' : 'h-[210px] sm:h-[220px] '"
+      class="absolute w-full bottom-0 grid grid-cols-2 grid-rows-[auto_auto] gap-y-4 p-5 lg:px-7 bg-primary rounded-2xl overflow-hidden transition-all duration-700"
+      :class="seeMore ? 'h-full' : 'h-[210px] sm:h-[224px] '"
     >
       <titles title="air conditions" class="self-center" />
       <main-button
-        class="justify-self-end"
+        class="justify-self-end self-center"
         @click="seeMore = !seeMore"
         :value="seeMore ? 'See less' : 'See more'"
       />
       <div
-        class="grid grid-cols-2 grid-rows-[auto_1fr] col-span-2 gap-y-5 gap-x-5 sm:gap-x-10"
+        class="grid grid-cols-2 grid-rows-[auto_1fr] col-span-2 gap-y-5 gap-x-3 sm:gap-x-10"
       >
         <weather-card
-          :class="seeMore ? 'p-5' : 'p-0'"
+          :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="Real feel"
           icon="/weather/temperature.svg"
           unit="&#176;"
-          :value="Math.floor(degree === 'c' ? data.value!.current.feelslike_c : data.value!.current.feelslike_f)"
+          :value="
+            Math.floor(
+              degree === 'c'
+                ? data.current.feelslike_c
+                : data.current.feelslike_f
+            )
+          "
         />
         <weather-card
-          :class="seeMore ? 'p-5' : 'p-0'"
+          :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="Wind"
           icon="/weather/wind.svg"
           :unit="' ' + speed"
-          :value="speed === 'km/h'? data.value!.current.wind_kph: data.value!.current.wind_mph"
+          :value="
+            speed === 'km/h' ? data.current.wind_kph : data.current.wind_mph
+          "
         />
         <weather-card
-          v-if="data.value!.forecast.forecastday[0].day.daily_chance_of_rain >= data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
-          :class="seeMore ? 'p-5' : 'p-0'"
+          v-if="
+            data.forecast.forecastday[0].day.daily_chance_of_rain >=
+            data.forecast.forecastday[0].day.daily_chance_of_snow
+          "
+          :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="Chance of rain"
           icon="/weather/rain.svg"
           unit="%"
-          :value="data.value!.forecast.forecastday[0].day.daily_chance_of_rain"
+          :value="data.forecast.forecastday[0].day.daily_chance_of_rain"
         />
         <weather-card
           v-else
-          :class="seeMore ? 'p-5' : 'p-0'"
+          :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="Chance of snow"
           icon="/weather/snow.svg"
           unit="%"
-          :value="data.value!.forecast.forecastday[0].day.daily_chance_of_snow"
+          :value="data.forecast.forecastday[0].day.daily_chance_of_snow"
         />
         <weather-card
-          :class="seeMore ? 'p-5' : 'p-0'"
+          :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="UV Index"
           icon="/weather/uv.svg"
-          :value="data.value!.current.uv"
+          :value="data.current.uv"
         />
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title="Precip"
           icon="/weather/precip.svg"
           :unit="' ' + precip"
-          :value="precip === 'mm' ? data.value!.current.precip_mm : data.value!.current.precip_in"
+          :value="
+            precip === 'mm' ? data.current.precip_mm : data.current.precip_in
+          "
         />
 
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title="Pressure"
           icon="/weather/pressure.svg"
           :unit="' ' + pressure"
-          :value="pressure === 'mbar' ? data.value!.current.pressure_mb : data.value!.current.pressure_in"
+          :value="
+            pressure === 'mbar'
+              ? data.current.pressure_mb
+              : data.current.pressure_in
+          "
         />
 
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title="Visibility"
           icon="/weather/visibility.svg"
           :unit="' ' + speed"
-          :value="speed === 'km/h' ? data.value!.current.vis_km : data.value!.current.vis_miles"
+          :value="
+            speed === 'km/h' ? data.current.vis_km : data.current.vis_miles
+          "
         />
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title="Humidity"
           icon="/weather/humidity.svg"
           unit="%"
-          :value="data.value!.current.humidity"
+          :value="data.current.humidity"
         />
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title=" Sunrise"
           icon="/weather/sunrise.svg"
-          :value="data.value!.forecast.forecastday[0].astro.sunrise"
+          :value="data.forecast.forecastday[0].astro.sunrise"
         />
         <weather-card
           :class="
-            seeMore ? 'p-5 visible opacity-100' : 'p-0 invisible opacity-0'
+            seeMore
+              ? 'py-4 sm:p-5 visible opacity-100'
+              : 'p-0 invisible opacity-0'
           "
           title="Sunset"
           icon="/weather/sunset.svg"
-          :value="data.value!.forecast.forecastday[0].astro.sunset"
+          :value="data.forecast.forecastday[0].astro.sunset"
         />
       </div>
     </div>
@@ -228,13 +254,15 @@
 </template>
 
 <script setup lang="ts">
+import { ForecastHuor, Weather } from "~/types/types";
+
 const emit = defineEmits<{
   (e: "update:location", value?: string): void;
 }>();
 
 defineProps<{
-  data: any;
-  hours: any;
+  data: Weather;
+  hours: ForecastHuor[];
   degree: string;
   speed: string;
   precip: string;
@@ -251,18 +279,18 @@ const updateLocation = (newLocation: string) => {
 };
 
 onMounted(() => {
-  scroller.value?.addEventListener("wheel", function (event: any) {
+  scroller.value?.addEventListener("wheel", function (e: WheelEvent) {
     const modifier = ref(1);
-    if (event.deltaMode == event.DOM_DELTA_PIXEL) {
+    if (e.deltaMode == e.DOM_DELTA_PIXEL) {
       modifier.value = 1;
-    } else if (event.deltaMode == event.DOM_DELTA_LINE) {
+    } else if (e.deltaMode == e.DOM_DELTA_LINE) {
       modifier.value = parseInt(getComputedStyle(scroller.value).lineHeight);
-    } else if (event.deltaMode == event.DOM_DELTA_PAGE) {
+    } else if (e.deltaMode == e.DOM_DELTA_PAGE) {
       modifier.value = scroller.value.clientHeight;
     }
-    if (event.deltaY != 0) {
-      scroller.value.scrollLeft += modifier.value * event.deltaY;
-      event.preventDefault();
+    if (e.deltaY != 0) {
+      scroller.value.scrollLeft += modifier.value * e.deltaY;
+      e.preventDefault();
     }
   });
 });

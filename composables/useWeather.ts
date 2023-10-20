@@ -1,9 +1,15 @@
+import {
+  WeatherCurrent,
+  ForecastHuor,
+  WeatherForecastday,
+} from "~/types/types";
+
 export function useWeather() {
   const location = ref("50.447, 30.523");
   const date = ref(new Date());
   const lang = ref("en");
-  const week: any = ref([]);
-  const hours: any = ref([]);
+  const week = ref<string[]>([]);
+  const hours = ref<ForecastHuor[]>([]);
 
   date.value.setDate(date.value.getDate() + 3);
   for (let i = 0; i < 4; i++, date.value.setDate(date.value.getDate() + 1)) {
@@ -36,18 +42,22 @@ export function useWeather() {
       );
     }
 
-    const h: any = ref([]);
-    h.value?.push(res.data.value?.current);
-
-    res.data.value?.forecast.forecastday.forEach((day: any) => {
-      day.hour.forEach((hour: any) => {
+    const h = ref<ForecastHuor[]>([]);
+    h.value.push({
+      time: res.data.value!.current.last_updated,
+      temp_c: res.data.value!.current.temp_c,
+      temp_f: res.data.value!.current.temp_f,
+      condition: { icon: res.data.value!.current.condition.icon },
+    });
+    res.data.value?.forecast.forecastday.forEach((day: WeatherForecastday) => {
+      day.hour.forEach((hour: ForecastHuor) => {
         if (h.value?.length < 25 && new Date() <= new Date(hour.time)) {
           h.value?.push(hour);
         }
       });
     });
     hours.value = h.value;
-
+    console.log(hours.value);
     return res;
   });
 

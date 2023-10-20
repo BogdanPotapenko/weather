@@ -7,7 +7,7 @@
 
   <template v-else-if="!isLoading && data">
     <div class="p-5">
-      <div class="max-w-[1200px] mx-auto text-white">
+      <div class="max-w-screen-xl mx-auto text-white">
         <div
           v-if="data"
           class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12 gap-5"
@@ -22,7 +22,7 @@
           />
 
           <main-content
-            :data="data"
+            :data="data.value"
             :hours="hours"
             :degree="degree"
             :speed="speed"
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 const { isLoading, data, location, date, hours, lang } = useWeather();
 
-const cities: any = ref(["Kyiv"]);
+const cities = ref<string[]>(["Kyiv"]);
 const degree = ref("c");
 const speed = ref("km/h");
 const precip = ref("mm");
@@ -50,8 +50,8 @@ const pressure = ref("mbar");
 
 watch(location, () => {
   setTimeout(() => {
-    if (!cities.value.includes(data.value?.value?.location.name)) {
-      cities.value.push(data.value?.value?.location.name);
+    if (!cities.value.includes(data.value!.value!.location.name)) {
+      cities.value.push(data.value!.value!.location.name);
     }
   }, 500);
 });

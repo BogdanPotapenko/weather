@@ -20,7 +20,7 @@ const emit = defineEmits<{
 defineProps<{
   label: string;
   modelValue: string | number;
-  options: any;
+  options: string[];
 }>();
 
 const updateValue = (e: Event) => {

@@ -7,7 +7,7 @@
     @click="behindModal"
   >
     <div
-      class="relative h-[80%] w-[80%] max-w-[1000px] bg-primary mx-auto rounded-2xl shadow-lg z-40 overflow-hidden"
+      class="relative w-4/5 h-4/5 max-w-5xl bg-primary mx-auto rounded-2xl shadow-lg z-40 overflow-hidden"
     >
       <button
         @click="modalClose()"
@@ -25,12 +25,10 @@ const emit = defineEmits(["close"]);
 defineProps(["isModal", "color"]);
 
 const modalClose = () => {
-  setTimeout(() => {
-    emit("close");
-  }, 0);
+  emit("close");
 };
-const behindModal = (event: any) => {
-  if (event.target.id === "modal") {
+const behindModal = (e: MouseEvent) => {
+  if ((e.target as HTMLInputElement).id === "modal") {
     modalClose();
   }
 };
