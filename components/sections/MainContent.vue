@@ -124,9 +124,7 @@
         @click="seeMore = !seeMore"
         :value="seeMore ? 'See less' : 'See more'"
       />
-      <div
-        class="grid grid-cols-2 grid-rows-[auto_1fr] col-span-2 gap-y-5 gap-x-3 sm:gap-x-10"
-      >
+      <div class="grid grid-cols-2 col-span-2 gap-y-5 gap-x-5 sm:gap-x-10">
         <weather-card
           :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
           title="Real feel"
