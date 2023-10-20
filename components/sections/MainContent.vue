@@ -76,7 +76,7 @@
       </div>
       <div class="justify-self-end flex items-center lg:pr-7 h-full">
         <img
-          class="max-sm:max-h-25 max-sm:max-w-25 max-sm:min-h-25 max-sm:min-w-25 w-full h-full"
+          class="max-sm:max-h-[100px] max-sm:max-w-[100px] max-sm:min-h-[100px] max-sm:min-w-[100px] w-full h-full"
           :src="data.current.condition.icon"
           alt=""
         />
