@@ -1,13 +1,9 @@
-import {
-  WeatherCurrent,
-  ForecastHuor,
-  WeatherForecastday,
-} from "~/types/types";
+import { getWeather } from "~/server/api/getWeather";
+import { ForecastHuor, WeatherForecastday } from "~/types/types";
 
 export function useWeather() {
   const location = ref("50.447, 30.523");
   const date = ref(new Date());
-  const lang = ref("en");
   const week = ref<string[]>([]);
   const hours = ref<ForecastHuor[]>([]);
 
@@ -27,16 +23,12 @@ export function useWeather() {
       {
         q: location.value,
         days: 3,
-        lang: lang.value,
       },
       "weather"
     );
 
     for (const day of week.value) {
-      const { data } = await getWeather(
-        { q: location.value, dt: day, lang: lang.value },
-        day
-      );
+      const { data } = await getWeather({ q: location.value, dt: day }, day);
       res.data.value?.forecast.forecastday.push(
         data.value!.forecast.forecastday[0]
       );
@@ -57,18 +49,15 @@ export function useWeather() {
       });
     });
     hours.value = h.value;
-    console.log(hours.value);
     return res;
   });
 
   watch(date, () => result.refetch());
   watch(location, () => result.refetch());
-  watch(lang, () => result.refetch());
   return {
     ...result,
     hours,
     date,
     location,
-    lang,
   };
 }

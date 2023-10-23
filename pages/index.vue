@@ -40,7 +40,7 @@
   </template>
 </template>
 <script setup lang="ts">
-const { isLoading, data, location, date, hours, lang } = useWeather();
+const { isLoading, data, location, date, hours } = useWeather();
 
 const cities = ref<string[]>(["Kyiv"]);
 const degree = ref("c");

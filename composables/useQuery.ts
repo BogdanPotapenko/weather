@@ -3,7 +3,6 @@ export function useQuery<TData>(queryFn: () => Promise<{ data: TData }>) {
   const data = ref<TData>();
   const error = ref(undefined);
 
-  // onMounted(() => setTimeout(() => fetchData(), 1));
   onMounted(() => fetchData());
 
   const fetchData = async () => {
