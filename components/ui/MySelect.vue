@@ -6,7 +6,13 @@
     name="select"
     class="border border-gray text-black text-lg rounded-lg block w-full p-2.5"
   >
-    <option v-for="option in options" :for="label" :value="option" selected>
+    <option
+      v-for="(option, index) in options"
+      :key="index"
+      :for="label"
+      :value="option"
+      selected
+    >
       {{ label }}: {{ option }}
     </option>
   </select>

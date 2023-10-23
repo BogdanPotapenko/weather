@@ -40,7 +40,8 @@
           <div class="h-[calc(100%_-_80px)] px-10 pb-3">
             <div class="h-full flex flex-col overflow-auto">
               <div
-                v-for="city in cities"
+                v-for="(city, index) in cities"
+                :key="index"
                 class="flex justify-between py-5 border-b border-gray/50"
               >
                 <button

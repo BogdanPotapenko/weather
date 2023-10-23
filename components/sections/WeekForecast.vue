@@ -6,6 +6,7 @@
     <div class="flex flex-col h-full">
       <div
         v-for="day in week"
+        :key="day.date_epoch"
         class="grid grid-cols-[20%_auto_1fr_20%] sm:grid-cols-[25%_auto_1fr_25%] grow gap-x-1 items-center first:border-0 border-t border-gray/50"
       >
         <p class="text-gray text-sm font-bold">
