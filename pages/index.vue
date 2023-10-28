@@ -1,17 +1,14 @@
 <template>
-  <div v-if="isLoading"><Loader" /></div>
+  <div v-if="isLoading" class="mx-auto w-10 mt-10"><loader /></div>
 
   <template v-else-if="hasNoResultsState">
     <h1 class="pt-5 text-center text-white">No results</h1>
   </template>
 
-  <template v-else-if="!isLoading && data">
+  <template v-else-if="!isLoading && data && data.value">
     <div class="p-5">
       <div class="max-w-screen-xl mx-auto text-white">
-        <div
-          v-if="data"
-          class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12 gap-5"
-        >
+        <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12 gap-5">
           <control-panel
             :cities="cities"
             v-model:degree="degree"
@@ -49,7 +46,11 @@ const precip = ref("mm");
 const pressure = ref("mbar");
 
 onUpdated(() => {
-  if (data.value && !cities.value.includes(data.value!.value!.location.name)) {
+  if (
+    data.value &&
+    data.value.value &&
+    !cities.value.includes(data.value.value.location.name)
+  ) {
     cities.value.push(data.value!.value!.location.name);
   }
 });

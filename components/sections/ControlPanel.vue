@@ -118,7 +118,7 @@ const emit = defineEmits<{
 }>();
 
 defineProps<{
-  cities: [];
+  cities: string[];
   degree: string;
   speed: string;
   precip: string;

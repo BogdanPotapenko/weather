@@ -1,7 +1,7 @@
 <template>
   <button class="absolute m-5 top-0 right-0 cursor-pointer z-50">
     <svg
-      class="w-[40px] h-[40px]"
+      class="w-10 h-10"
       :class="color === 'dark' ? 'fill-black' : 'fill-white'"
       viewBox="0 0 18 18"
     >
