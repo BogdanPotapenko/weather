@@ -68,3 +68,9 @@ export interface Search {
   id: number;
   name: string;
 }
+
+export interface MyModal {
+  cities?: boolean;
+  map?: boolean;
+  settings?: boolean;
+}

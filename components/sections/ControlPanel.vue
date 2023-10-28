@@ -79,25 +79,25 @@
                 label="degree"
                 :model-value="degree"
                 :options="['c', 'f']"
-                @input="updateDegree"
+                @change="updateDegree"
               />
               <my-select
                 label="speed"
                 :model-value="speed"
                 :options="['km/h', 'm/h']"
-                @input="updateSpeed"
+                @change="updateSpeed"
               />
               <my-select
                 label="precip"
                 :model-value="precip"
                 :options="['mm', 'in']"
-                @input="updatePrecip"
+                @change="updatePrecip"
               />
               <my-select
                 label="pressure"
                 :model-value="pressure"
                 :options="['mbar', 'inHg']"
-                @input="updatePressure"
+                @change="updatePressure"
               />
             </div>
           </div>
@@ -107,6 +107,8 @@
   </section>
 </template>
 <script setup lang="ts">
+import { MyModal } from "~/types/types";
+
 const emit = defineEmits<{
   (e: "update:degree", value?: string): void;
   (e: "update:speed", value?: string): void;
@@ -126,13 +128,7 @@ defineProps<{
 
 const markerRef = useMapboxMarkerRef("marker1");
 
-interface Modal {
-  cities?: boolean;
-  map?: boolean;
-  settings?: boolean;
-}
-
-const isModal = ref<Modal>({});
+const isModal = ref<MyModal>({});
 
 const updateDegree = (e: Event) => {
   emit("update:degree", (e.target as HTMLInputElement).value);
@@ -158,8 +154,8 @@ const selectCity = () => {
 };
 
 watch(isModal.value, () => {
-  Object.values(isModal.value).every((e: boolean) => {
-    if (e) {
+  Object.values(isModal.value).every((el: boolean) => {
+    if (el) {
       document.body.style.overflow = "hidden";
       return false;
     } else {
@@ -168,8 +164,7 @@ watch(isModal.value, () => {
     return true;
   });
   if (!isModal.value.map && markerRef.value?.getLngLat()) {
-    emit(
-      "update:location",
+    updateLocation(
       `${markerRef.value.getLngLat().lat},${markerRef.value.getLngLat().lng}`
     );
   }

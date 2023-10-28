@@ -12,7 +12,7 @@
           v-if="data"
           class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12 gap-5"
         >
-          <navigation
+          <control-panel
             :cities="cities"
             v-model:degree="degree"
             v-model:speed="speed"
@@ -40,20 +40,18 @@
   </template>
 </template>
 <script setup lang="ts">
-const { isLoading, data, location, date, hours } = useWeather();
+const { isLoading, data, location, hours } = useWeather();
 
-const cities = ref<string[]>(["Kyiv"]);
+const cities = ref<string[]>([]);
 const degree = ref("c");
 const speed = ref("km/h");
 const precip = ref("mm");
 const pressure = ref("mbar");
 
-watch(location, () => {
-  setTimeout(() => {
-    if (!cities.value.includes(data.value!.value!.location.name)) {
-      cities.value.push(data.value!.value!.location.name);
-    }
-  }, 500);
+onUpdated(() => {
+  if (data.value && !cities.value.includes(data.value!.value!.location.name)) {
+    cities.value.push(data.value!.value!.location.name);
+  }
 });
 
 const hasNoResultsState = computed(

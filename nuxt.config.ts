@@ -24,6 +24,5 @@ export default defineNuxtConfig({
     { path: "~/components/layouts" },
     { path: "~/components/sections" },
     { path: "~/components/ui" },
-    { path: "~/components/icons" },
   ],
 });

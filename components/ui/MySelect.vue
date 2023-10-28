@@ -2,7 +2,7 @@
   <select
     :id="label"
     :value="modelValue"
-    @input="updateValue"
+    @change="changeValue"
     name="select"
     class="border border-gray text-black text-lg rounded-lg block w-full p-2.5"
   >
@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 const emit = defineEmits<{
-  (e: "update:modelValue", value?: string): void;
+  (e: "change:", value?: string): void;
 }>();
 
 defineProps<{
@@ -29,7 +29,7 @@ defineProps<{
   options: string[];
 }>();
 
-const updateValue = (e: Event) => {
-  emit("update:modelValue", (e.target as HTMLInputElement).value);
+const changeValue = (e: Event) => {
+  emit("change:", (e.target as HTMLInputElement).value);
 };
 </script>
