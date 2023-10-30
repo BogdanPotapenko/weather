@@ -18,7 +18,7 @@
           {{
             index === 0
               ? "NOW"
-              : new Date(hour.time)
+              : new Date(hour.time!)
                   .toLocaleTimeString("en-US")
                   .match(/[\d]+:\d{2}|[AP]M+/g)
                   ?.join(" ")
