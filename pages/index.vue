@@ -5,7 +5,7 @@
     <h1 class="pt-5 text-center text-white">No results</h1>
   </template>
 
-  <template v-else-if="!isLoading && data && data.value">
+  <template v-else-if="!isLoading && data">
     <div class="p-5">
       <div class="max-w-screen-xl mx-auto text-white">
         <div class="max-lg:flex max-lg:flex-col lg:grid lg:grid-cols-12 gap-5">
@@ -18,8 +18,8 @@
             v-model:location="location"
           />
 
-          <main-content
-            :data="data.value"
+          <current-forecast
+            :data="data"
             :hours="hours"
             :degree="degree"
             :speed="speed"
@@ -27,10 +27,7 @@
             :pressure="pressure"
             v-model:location="location"
           />
-          <week-forecast
-            :week="data.value!.forecast.forecastday"
-            :degree="degree"
-          />
+          <week-forecast :week="data.forecast.forecastday" :degree="degree" />
         </div>
       </div>
     </div>
@@ -46,16 +43,15 @@ const precip = ref("mm");
 const pressure = ref("mbar");
 
 onUpdated(() => {
+  console.log(data);
   if (
     data.value &&
-    data.value.value &&
-    !cities.value.includes(data.value.value.location.name)
+    data.value &&
+    !cities.value.includes(data.value.location.name)
   ) {
-    cities.value.push(data.value!.value!.location.name);
+    cities.value.push(data.value!.location.name);
   }
 });
 
-const hasNoResultsState = computed(
-  () => !isLoading.value && !data.value?.value
-);
+const hasNoResultsState = computed(() => !isLoading.value && !data.value);
 </script>

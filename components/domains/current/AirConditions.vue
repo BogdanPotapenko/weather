@@ -10,7 +10,7 @@
       :value="seeMore ? 'See less' : 'See more'"
     />
     <div class="grid grid-cols-2 col-span-2 gap-y-5 gap-x-5 sm:gap-x-10">
-      <weather-card
+      <current-condition
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="Real feel"
         icon="/weather/temperature.svg"
@@ -21,7 +21,7 @@
           )
         "
       />
-      <weather-card
+      <current-condition
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="Wind"
         icon="/weather/wind.svg"
@@ -30,7 +30,7 @@
           speed === 'km/h' ? data.current.wind_kph : data.current.wind_mph
         "
       />
-      <weather-card
+      <current-condition
         v-if="
           data.forecast.forecastday[0].day.daily_chance_of_rain >=
           data.forecast.forecastday[0].day.daily_chance_of_snow
@@ -41,7 +41,7 @@
         unit="%"
         :value="data.forecast.forecastday[0].day.daily_chance_of_rain"
       />
-      <weather-card
+      <current-condition
         v-else
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="Chance of snow"
@@ -49,13 +49,13 @@
         unit="%"
         :value="data.forecast.forecastday[0].day.daily_chance_of_snow"
       />
-      <weather-card
+      <current-condition
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="UV Index"
         icon="/weather/uv.svg"
         :value="data.current.uv"
       />
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'
@@ -69,7 +69,7 @@
         "
       />
 
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'
@@ -85,7 +85,7 @@
         "
       />
 
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'
@@ -96,7 +96,7 @@
         :unit="' ' + speed"
         :value="speed === 'km/h' ? data.current.vis_km : data.current.vis_miles"
       />
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'
@@ -107,7 +107,7 @@
         unit="%"
         :value="data.current.humidity"
       />
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'
@@ -117,7 +117,7 @@
         icon="/weather/sunrise.svg"
         :value="data.forecast.forecastday[0].astro.sunrise"
       />
-      <weather-card
+      <current-condition
         :class="
           seeMore
             ? 'py-4 sm:p-5 visible opacity-100'

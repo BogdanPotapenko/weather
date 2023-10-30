@@ -21,6 +21,7 @@ export default defineNuxtConfig({
   },
   components: [
     "~/components",
+    { path: "~/components/domains" },
     { path: "~/components/layouts" },
     { path: "~/components/sections" },
     { path: "~/components/ui" },

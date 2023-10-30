@@ -55,7 +55,7 @@ export interface ForecastDayCondition {
   icon: string;
 }
 export interface ForecastHuor {
-  time: string;
+  time?: string;
   condition: HourCondition;
   temp_c: number;
   temp_f: number;

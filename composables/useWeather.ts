@@ -35,21 +35,16 @@ export function useWeather() {
     }
 
     const h = ref<ForecastHuor[]>([]);
-    h.value.push({
-      time: res.data.value!.current.last_updated,
-      temp_c: res.data.value!.current.temp_c,
-      temp_f: res.data.value!.current.temp_f,
-      condition: { icon: res.data.value!.current.condition.icon },
-    });
+    h.value.push(res.data.value!.current);
     res.data.value?.forecast.forecastday.forEach((day: WeatherForecastday) => {
       day.hour.forEach((hour: ForecastHuor) => {
-        if (h.value?.length < 25 && new Date() <= new Date(hour.time)) {
+        if (h.value?.length < 25 && new Date() <= new Date(hour.time!)) {
           h.value?.push(hour);
         }
       });
     });
     hours.value = h.value;
-    return res;
+    return { data: res.data.value };
   });
 
   watch(date, () => result.refetch());
@@ -57,7 +52,6 @@ export function useWeather() {
   return {
     ...result,
     hours,
-    date,
     location,
   };
 }

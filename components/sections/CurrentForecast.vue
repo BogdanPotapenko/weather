@@ -2,10 +2,10 @@
   <section
     class="relative h-[650px] sm:h-[730px] lg:h-[736px] flex flex-col lg:col-span-7 gap-y-4 transition-all duration-700"
   >
-    <section-main-content-search v-model:newLocation="newLocation" />
-    <section-main-content-current-weather :data="data" :degree="degree" />
-    <section-main-content-todays-forecast :hours="hours" :degree="degree" />
-    <section-main-content-more-weather
+    <current-search v-model:newLocation="newLocation" />
+    <current-base-information information :data="data" :degree="degree" />
+    <current-todays-forecast :hours="hours" :degree="degree" />
+    <current-air-conditions
       :data="data"
       :degree="degree"
       :speed="speed"
