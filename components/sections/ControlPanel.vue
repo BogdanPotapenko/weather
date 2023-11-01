@@ -5,7 +5,7 @@
     <div
       class="w-10 h-10 lg:w-14 lg:h-14 bg-hover flex justify-center p-2 rounded-xl"
     >
-      <img class="" src="/weather.svg" alt="" />
+      <img class="w-full h-wull" src="/weather.svg" alt="" />
     </div>
     <div class="flex lg:flex-col items-center gap-2 overflow-hidden">
       <nav-button

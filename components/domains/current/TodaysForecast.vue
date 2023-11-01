@@ -17,7 +17,11 @@
         >
           {{ hour.time ? hour.time : "NOW" }}
         </p>
-        <img class="w-12 sm:w-[75px] p-1" :src="hour.condition.icon" alt="" />
+        <img
+          class="w-12 sm:w-[75px] h-12 sm:h-[75px] p-1"
+          :src="hour.condition.icon"
+          alt=""
+        />
         <p class="text-lg sm:text-[22px]/[22px] font-bold uppercase">
           {{ Math.floor(degree === "c" ? hour.temp_c : hour.temp_f) }}&#176;
         </p>

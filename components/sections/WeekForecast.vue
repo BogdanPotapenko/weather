@@ -14,7 +14,7 @@
         </p>
 
         <img
-          class="max-w-[50px] sm:max-w-15 h-auto"
+          class="max-w-[50px] sm:max-w-15 w-full h-auto"
           :src="day.day.condition.icon"
           alt=""
         />
