@@ -47,7 +47,6 @@ export function useWeather() {
     return { data: res.data.value };
   });
 
-  watch(date, () => result.refetch());
   watch(location, () => result.refetch());
   return {
     ...result,

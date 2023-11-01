@@ -10,11 +10,7 @@
         class="grid grid-cols-[20%_auto_1fr_20%] sm:grid-cols-[25%_auto_1fr_25%] grow gap-x-1 items-center first:border-0 border-t border-gray/50"
       >
         <p class="text-gray text-sm font-bold">
-          {{
-            new Date(day.date) <= new Date()
-              ? "Today"
-              : new Date(day.date).toString().slice(0, 3)
-          }}
+          {{ day.date }}
         </p>
 
         <img
@@ -41,6 +37,16 @@
     </div>
   </section>
 </template>
-<script setup land="ts">
-defineProps(["week", "degree"]);
+<script setup lang="ts">
+import { WeatherForecastday } from "~/types/types";
+
+const prop = defineProps<{
+  week: WeatherForecastday[];
+  degree: string;
+}>();
+
+prop.week.map(
+  (el, i) =>
+    (el.date = i === 0 ? "Today" : new Date(el.date).toString().slice(0, 3))
+);
 </script>

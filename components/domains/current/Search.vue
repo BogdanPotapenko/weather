@@ -1,19 +1,11 @@
 <template>
   <div
     class="relative bg-primary text-gray"
-    :class="
-      search && search.length > 0 && searchParams
-        ? 'rounded-t-xl '
-        : 'rounded-xl'
-    "
+    :class="hasSearch ? 'rounded-t-xl ' : 'rounded-xl'"
   >
     <div
       class="flex gap-x-2 mx-2 py-2 text-gray"
-      :class="
-        search && search.length > 0 && searchParams
-          ? 'border-b border-gray/50 '
-          : ''
-      "
+      :class="hasSearch ? 'border-b border-gray/50 ' : ''"
     >
       <img class="w-6 h-6" src="/search.svg" alt="" />
       <input
@@ -25,7 +17,7 @@
     </div>
     <div
       class="absolute z-10 w-full rounded-b-xl bg-primary pt-1"
-      v-if="search && search.length > 0 && searchParams"
+      v-if="hasSearch"
     >
       <div
         v-for="locality in search"
@@ -52,4 +44,8 @@ const { data: search, searchParams } = useSearch();
 const updateLocation = (newLocation: string) => {
   emit("update:newLocation", newLocation);
 };
+
+const hasSearch = computed(
+  () => search.value && search.value.length > 0 && searchParams.value
+);
 </script>

@@ -16,9 +16,7 @@
         icon="/weather/temperature.svg"
         unit="&#176;"
         :value="
-          Math.floor(
-            degree === 'c' ? data.current.feelslike_c : data.current.feelslike_f
-          )
+          Math.floor(degree === 'c' ? current.feelslike_c : current.feelslike_f)
         "
       />
       <current-condition
@@ -26,20 +24,15 @@
         title="Wind"
         icon="/weather/wind.svg"
         :unit="' ' + speed"
-        :value="
-          speed === 'km/h' ? data.current.wind_kph : data.current.wind_mph
-        "
+        :value="speed === 'km/h' ? current.wind_kph : current.wind_mph"
       />
       <current-condition
-        v-if="
-          data.forecast.forecastday[0].day.daily_chance_of_rain >=
-          data.forecast.forecastday[0].day.daily_chance_of_snow
-        "
+        v-if="hasRain"
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="Chance of rain"
         icon="/weather/rain.svg"
         unit="%"
-        :value="data.forecast.forecastday[0].day.daily_chance_of_rain"
+        :value="forecast.day.daily_chance_of_rain"
       />
       <current-condition
         v-else
@@ -47,13 +40,13 @@
         title="Chance of snow"
         icon="/weather/snow.svg"
         unit="%"
-        :value="data.forecast.forecastday[0].day.daily_chance_of_snow"
+        :value="forecast.day.daily_chance_of_snow"
       />
       <current-condition
         :class="seeMore ? 'py-4 sm:p-5' : 'p-0'"
         title="UV Index"
         icon="/weather/uv.svg"
-        :value="data.current.uv"
+        :value="current.uv"
       />
       <current-condition
         :class="
@@ -64,11 +57,8 @@
         title="Precip"
         icon="/weather/precip.svg"
         :unit="' ' + precip"
-        :value="
-          precip === 'mm' ? data.current.precip_mm : data.current.precip_in
-        "
+        :value="precip === 'mm' ? current.precip_mm : current.precip_in"
       />
-
       <current-condition
         :class="
           seeMore
@@ -78,13 +68,8 @@
         title="Pressure"
         icon="/weather/pressure.svg"
         :unit="' ' + pressure"
-        :value="
-          pressure === 'mbar'
-            ? data.current.pressure_mb
-            : data.current.pressure_in
-        "
+        :value="pressure === 'mbar' ? current.pressure_mb : current.pressure_in"
       />
-
       <current-condition
         :class="
           seeMore
@@ -94,7 +79,7 @@
         title="Visibility"
         icon="/weather/visibility.svg"
         :unit="' ' + speed"
-        :value="speed === 'km/h' ? data.current.vis_km : data.current.vis_miles"
+        :value="speed === 'km/h' ? current.vis_km : current.vis_miles"
       />
       <current-condition
         :class="
@@ -105,7 +90,7 @@
         title="Humidity"
         icon="/weather/humidity.svg"
         unit="%"
-        :value="data.current.humidity"
+        :value="current.humidity"
       />
       <current-condition
         :class="
@@ -115,7 +100,7 @@
         "
         title=" Sunrise"
         icon="/weather/sunrise.svg"
-        :value="data.forecast.forecastday[0].astro.sunrise"
+        :value="forecast.astro.sunrise"
       />
       <current-condition
         :class="
@@ -125,16 +110,17 @@
         "
         title="Sunset"
         icon="/weather/sunset.svg"
-        :value="data.forecast.forecastday[0].astro.sunset"
+        :value="forecast.astro.sunset"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Weather } from "~/types/types";
-defineProps<{
-  data: Weather;
+import { WeatherForecastday, WeatherCurrent } from "~/types/types";
+const prop = defineProps<{
+  forecast: WeatherForecastday;
+  current: WeatherCurrent;
   degree: string;
   speed: string;
   precip: string;
@@ -142,4 +128,10 @@ defineProps<{
 }>();
 
 const seeMore = ref(false);
+
+const hasRain = computed(
+  () =>
+    prop.forecast.day.daily_chance_of_rain >=
+    prop.forecast.day.daily_chance_of_snow
+);
 </script>

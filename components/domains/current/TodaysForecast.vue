@@ -15,18 +15,11 @@
         <p
           class="text-gray text-[10px]/[10px] sm:text-base font-bold uppercase whitespace-nowrap"
         >
-          {{
-            index === 0
-              ? "NOW"
-              : new Date(hour.time!)
-                  .toLocaleTimeString("en-US")
-                  .match(/[\d]+:\d{2}|[AP]M+/g)
-                  ?.join(" ")
-          }}
+          {{ hour.time ? hour.time : "NOW" }}
         </p>
         <img class="w-12 sm:w-[75px] p-1" :src="hour.condition.icon" alt="" />
         <p class="text-lg sm:text-[22px]/[22px] font-bold uppercase">
-          {{ Math.floor(degree === "c" ? hour?.temp_c : hour?.temp_f) }}&#176;
+          {{ Math.floor(degree === "c" ? hour.temp_c : hour.temp_f) }}&#176;
         </p>
       </div>
     </div>
@@ -35,12 +28,20 @@
 
 <script setup lang="ts">
 import { ForecastHuor } from "~/types/types";
-defineProps<{
+const prop = defineProps<{
   hours: ForecastHuor[];
   degree: string;
 }>();
 
 const scroller = ref();
+
+prop.hours.map(
+  (el) =>
+    (el.time = new Date(el.time!)
+      .toLocaleTimeString("en-US")
+      .match(/[\d]+:\d{2}|[AP]M+/g)
+      ?.join(" "))
+);
 
 onMounted(() => {
   scroller.value?.addEventListener("wheel", function (e: WheelEvent) {

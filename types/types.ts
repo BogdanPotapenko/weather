@@ -3,9 +3,11 @@ export interface Weather {
   current: WeatherCurrent;
   forecast: WeatherForecast;
 }
+
 export interface Location {
   name: string;
 }
+
 export interface WeatherCurrent {
   last_updated: string;
   temp_c: number;
@@ -22,22 +24,26 @@ export interface WeatherCurrent {
   pressure_in: number;
   precip_mm: number;
   precip_in: number;
-  condition: WeatherCondition;
+  condition: CurrentCondition;
 }
-export interface WeatherCondition {
+
+export interface CurrentCondition {
   icon: string;
 }
+
 export interface WeatherForecast {
   forecastday: WeatherForecastday[];
 }
+
 export interface WeatherForecastday {
-  date: Date;
+  date: Date | string;
   date_epoch: number;
-  day: Day;
-  astro: Astro;
+  day: ForecastDay;
+  astro: ForecastAstro;
   hour: ForecastHuor[];
 }
-export interface Day {
+
+export interface ForecastDay {
   maxtemp_c: number;
   mintemp_c: number;
   maxtemp_f: number;
@@ -46,21 +52,25 @@ export interface Day {
   daily_chance_of_snow: number;
   condition: ForecastDayCondition;
 }
-export interface Astro {
+
+export interface ForecastAstro {
   sunrise: string;
   sunset: string;
 }
+
 export interface ForecastDayCondition {
   text: string;
   icon: string;
 }
+
 export interface ForecastHuor {
   time?: string;
-  condition: HourCondition;
+  condition: ForecastHuorCondition;
   temp_c: number;
   temp_f: number;
 }
-export interface HourCondition {
+
+export interface ForecastHuorCondition {
   icon: string;
 }
 

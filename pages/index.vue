@@ -1,7 +1,7 @@
 <template>
   <div v-if="isLoading" class="mx-auto w-10 mt-10"><loader /></div>
 
-  <template v-else-if="hasNoResultsState">
+  <template v-else-if="hasNoResults">
     <h1 class="pt-5 text-center text-white">No results</h1>
   </template>
 
@@ -43,15 +43,10 @@ const precip = ref("mm");
 const pressure = ref("mbar");
 
 onUpdated(() => {
-  console.log(data);
-  if (
-    data.value &&
-    data.value &&
-    !cities.value.includes(data.value.location.name)
-  ) {
+  if (data.value && !cities.value.includes(data.value.location.name)) {
     cities.value.push(data.value!.location.name);
   }
 });
 
-const hasNoResultsState = computed(() => !isLoading.value && !data.value);
+const hasNoResults = computed(() => !isLoading.value && !data.value);
 </script>
