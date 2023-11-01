@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute w-full bottom-0 grid grid-cols-2 grid-rows-[auto_auto] gap-y-4 p-5 lg:px-7 bg-primary rounded-2xl overflow-hidden transition-all duration-700"
+    class="absolute w-full bottom-0 grid grid-cols-2 grid-rows-[auto_auto] gap-y-4 p-5 lg:px-7 bg-primary rounded-3xl overflow-hidden transition-all duration-700"
     :class="seeMore ? 'h-full' : 'h-[210px] sm:h-[224px] '"
   >
     <titles title="air conditions" class="self-center" />
